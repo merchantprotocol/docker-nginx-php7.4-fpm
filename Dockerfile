@@ -30,6 +30,9 @@ RUN addgroup --gid ${GROUP_ID} www-data &&\
           --from=33:33 ${USER_ID}:${GROUP_ID} \
         /home/www-data
 
+RUN cp  /etc/apt/sources.list /etc/apt/sources.list.bak
+RUN sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+
 ## Now build the webserver
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
@@ -63,6 +66,13 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && apt-get update -y \
     && apt-get install nginx  -y
+
+# Install Databricks Driver
+RUN apt-get update \
+    && apt-get install -y unixodbc unixodbc-dev libsasl2-modules-gssapi-mit wget
+RUN wget https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.6.26/SimbaSparkODBC-2.6.26.1045-Debian-64bit.zip
+RUN unzip SimbaSparkODBC-2.6.26.1045-Debian-64bit.zip
+RUN dpkg -i simbaspark_2.6.26.1045-2_amd64.deb
 
 #RUN apt-get update \
 #    && apt-get install pip -y \
