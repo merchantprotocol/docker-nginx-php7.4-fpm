@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:22.04
 
 LABEL maintainer="Jonathon Byrdziak"
 
@@ -30,21 +30,13 @@ RUN addgroup --gid ${GROUP_ID} www-data &&\
           --from=33:33 ${USER_ID}:${GROUP_ID} \
         /home/www-data
 
-RUN cp  /etc/apt/sources.list /etc/apt/sources.list.bak
-RUN sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+RUN apt-get update \
+    && apt-get install lsb-release ca-certificates apt-transport-https software-properties-common -y \
+    && add-apt-repository ppa:ondrej/php \
+    && apt-get install -y gnupg gosu curl zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2
 
 ## Now build the webserver
 RUN apt-get update \
-    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
-    && mkdir -p ~/.gnupg \
-    && chmod 600 ~/.gnupg \
-    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
-    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu hirsute main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
     && apt-get install -y \
        php7.4-cli php7.4-dev php7.4-xdebug \
        php7.4-pgsql php7.4-sqlite3 php7.4-odbc \
