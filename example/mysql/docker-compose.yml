@@ -1,1 +1,11 @@
+version: "2"
 
+services:
+  app:
+    container_name: mysql
+    image: mysql:initial
+    restart: unless-stopped
+    ports:
+        - '3306:3306'
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
