@@ -9,3 +9,7 @@ services:
         - '3306:3306'
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - dbdata:/var/lib/mysql
+volumes:
+  dbdata:
