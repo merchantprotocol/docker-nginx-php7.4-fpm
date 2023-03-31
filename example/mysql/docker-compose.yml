@@ -3,7 +3,7 @@ version: "2"
 services:
   app:
     container_name: mysql
-    image: mysql:initial
+    image: mysql:latest
     restart: unless-stopped
     ports:
         - '3306:3306'
