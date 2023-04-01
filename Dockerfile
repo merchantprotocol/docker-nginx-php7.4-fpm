@@ -108,6 +108,9 @@ RUN touch /var/log/cron.log
 RUN mkdir /var/log/cron/
 RUN chmod 0600 /etc/cron.d/webapp
 
+RUN npm install -g npm@latest
+RUN npm install --global cross-env
+
 #######  Turn on/Run the container #########
 RUN chmod +x /usr/local/bin/start-container
 
