@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="Jonathon Byrdziak"
 
-ARG NODE_VERSION=19.1.0
+ARG NODE_VERSION=19
 ARG USER_ID=1000
 ARG GROUP_ID=1000 
 
