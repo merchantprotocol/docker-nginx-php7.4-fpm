@@ -114,6 +114,7 @@ RUN npm install --global cross-env
 
 #######  Turn on/Run the container #########
 RUN chmod +x /usr/local/bin/start-container
+RUN /etc/init.d/php7.4-fpm start
 
 EXPOSE 80
 EXPOSE 443
