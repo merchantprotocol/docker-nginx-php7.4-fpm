@@ -108,6 +108,7 @@ RUN touch /var/log/cron.log
 RUN mkdir /var/log/cron/
 RUN chmod 0600 /etc/cron.d/webapp
 
+RUN mkdir -p /root/.npm/_logs
 RUN npm install -g npm@latest
 RUN npm install --global cross-env
 
