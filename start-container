@@ -46,6 +46,4 @@ find /var/www/html/cron.d -type f ! -path '*.sh' -delete
 # start the a container services
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 
-/etc/init.d/php7.4-fpm start
-
 exit
